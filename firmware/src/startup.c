@@ -41,12 +41,6 @@ void _reset_isr()
 {
     uint32_t *src, *dst;
 
-    src = &_siiram0;
-    dst = &_siram0;
-
-    while (dst < &_eiram0) // Copy RAM code
-        *(dst++) = *(src++);
-
     src = &_sidata;
     dst = &_sdata;
 

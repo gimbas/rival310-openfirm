@@ -7,6 +7,7 @@
 #include "atomic.h"
 #include "systick.h"
 #include "rcc.h"
+#include "gpio.h"
 #include "uart.h"
 #include "i2c.h"
 #include "spi.h"
@@ -40,14 +41,16 @@ extern system_unique_id_t _system_unique_id;
 void _nmi_isr()
 {
     // The NMI is used for the Clock Security System (CSS)
-    rcc_update_clo    if(rfm69_init(RADIO_FLOAT_NODE_ID, RADIO_NETWORK_ID, RADIO_AES_KEY))
-        DBGPRINTLN_CTX("RFM69 init OK!");
-    else
-        DBGPRINTLN_CTX("RFM69 init NOK!");cks(); // Update clocks, we should be running on HSI now
+    rcc_update_clocks();
+
+    //if(rfm69_init(RADIO_FLOAT_NODE_ID, RADIO_NETWORK_ID, RADIO_AES_KEY))
+    //    DBGPRINTLN_CTX("RFM69 init OK!");
+    //else
+    //    DBGPRINTLN_CTX("RFM69 init NOK!");cks(); // Update clocks, we should be running on HSI now
 
     systick_init();
 
-//    uart1_init(500000);
+    uart1_init(500000);
 
 //    spi1_init(0, SPI_CLOCK_DIV_2, SPI_MSB_FIRST);
 //    i2c2_init(I2C_NORMAL);

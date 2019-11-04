@@ -1,8 +1,8 @@
 # App Config
-ARM_LIBROOT ?= /opt/arm/
+ARM_LIBROOT ?= /opt/arm-cmsis/
 DEVICEDIR = $(ARM_LIBROOT)/Keil.STM32F1xx_DFP.2.3.0/Device/Include
-COREDIR = $(ARM_LIBROOT)/ARM.CMSIS.5.5.1/CMSIS/Include
-MCU_TYPE = STM32F10X_HD
+COREDIR = $(ARM_LIBROOT)/ARM.CMSIS.5.6.0/CMSIS/Include
+MCU_TYPE = STM32F10X_MD
 HSE_CLOCK_FREQ = 8000000UL
 APP_ADDRESS = 0x08008000
 APP_NAME = rival310
@@ -67,7 +67,7 @@ CXXFLAGS += -g
 endif
 
 ## Linker scripts
-LDSCRIPT = ld/stm32f103rc_app.ld
+LDSCRIPT = ld/stm32f103cb.ld
 
 # Target
 TARGET = $(TARGETDIR)/v$(BUILD_VERSION).$(APP_NAME)
