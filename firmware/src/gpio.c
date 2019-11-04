@@ -172,19 +172,19 @@ void play_sound(uint16_t usFrequency, uint32_t ulTime)
 
     if(!ubInit)
     {
-        RCC->APB2RSTR |= RCC_APB2RSTR_TIM8RST; // Reset peripheral
-        RCC->APB2RSTR &= ~RCC_APB2RSTR_TIM8RST;
-        RCC->APB2ENR |= RCC_APB2ENR_TIM8EN; // Enable TIM8 peripheral clock
+        RCC->APB1RSTR |= RCC_APB1RSTR_TIM4RST; // Reset peripheral
+        RCC->APB1RSTR &= ~RCC_APB1RSTR_TIM4RST;
+        RCC->APB1ENR |= RCC_APB1ENR_TIM4EN; // Enable TIM8 peripheral clock
 
-        TIM8->PSC = (APB2_TIM_CLOCK_FREQ / 1000000) - 1; // 1 MHz clock
+        TIM4->PSC = (APB1_TIM_CLOCK_FREQ / 1000000) - 1; // 1 MHz clock
 
-        TIM8->CCR2 = 0;
-        TIM8->CCMR1 = (3 << 12); // Toggle mode
-        TIM8->CCER = TIM_CCER_CC2E; // Enable CH3N, active low
-        TIM8->BDTR = TIM_BDTR_MOE; // Main output enable
-        TIM8->EGR |= TIM_EGR_UG; // Update immediatly
+        TIM4->CCR2 = 0;
+        TIM4->CCMR1 = (3 << 12); // Toggle mode
+        TIM4->CCER = TIM_CCER_CC2E; // Enable CH3N, active low
+        TIM4->BDTR = TIM_BDTR_MOE; // Main output enable
+        TIM4->EGR |= TIM_EGR_UG; // Update immediatly
 
-        TIM8->CR1 |= TIM_CR1_CEN; // Enable timer
+        TIM4->CR1 |= TIM_CR1_CEN; // Enable timer
 
         ubInit = 1;
     }

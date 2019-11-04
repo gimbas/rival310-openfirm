@@ -50,7 +50,7 @@ void _nmi_isr()
 
     systick_init();
 
-    uart1_init(500000);
+//    uart1_init(500000);
 
 //    spi1_init(0, SPI_CLOCK_DIV_2, SPI_MSB_FIRST);
 //    i2c2_init(I2C_NORMAL);
@@ -90,7 +90,7 @@ void _exti15_10_isr()
     {
         EXTI->PR = EXTI_PR_PR12;
 
-//         Call Accelerometer ISR
+//      Call Accelerometer ISR
     }
 }
 
@@ -176,7 +176,7 @@ int init()
 
     gpio_init(); // Init GPIOs
 
-    adc_init(); // Init ADCs
+//    adc_init(); // Init ADCs
     rtc_init(); // Init RTC
     crc_init(); // Init CRC unit
 
@@ -206,15 +206,7 @@ int init()
     DBGPRINTLN_CTX("SPI1 - Clock: %.1f MHz!", (float)APB2_CLOCK_FREQ / 1000000 / 2);
     DBGPRINTLN_CTX("I2C2 - Clock: %lu kHz!", 100);
 
-//    play_sound(4000, 500);
     delay_ms(50);
-
-//    if(g_ubBatteryLow)
-//    {
-//        play_sound(3500, 200);
-//        delay_ms(100);
-//        play_sound(3500, 200);
-//    }
 
 //    DBGPRINTLN_CTX("Scanning I2C bus 2...");
 
@@ -233,15 +225,6 @@ int init()
 }
 int main()
 {
-    // Init tone
-    play_sound(1760, 50);
-    play_sound(1975, 50);
-    play_sound(2093, 50);
-    play_sound(2349, 50);
-    play_sound(2637, 50);
-    play_sound(2793, 50);
-    play_sound(3135, 50);
-    play_sound(3520, 50);
 
     // Config peripherals
 //    spi_flash_write_status_3((spi_flash_read_status_3() & 0x9B) | 0x04); // Enable individual block/sector protection (WPS bit set) and full drive strength
