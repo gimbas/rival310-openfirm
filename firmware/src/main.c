@@ -52,19 +52,12 @@ const uint8_t ubLights[360] = { // sine fade technique to cycle rgb led
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-// variables usb
-
 
 // ISRs
 void _nmi_isr()
 {
     // The NMI is used for the Clock Security System (CSS)
     rcc_update_clocks();
-
-    //if(rfm69_init(RADIO_FLOAT_NODE_ID, RADIO_NETWORK_ID, RADIO_AES_KEY))
-    //    DBGPRINTLN_CTX("RFM69 init OK!");
-    //else
-    //    DBGPRINTLN_CTX("RFM69 init NOK!");cks(); // Update clocks, we should be running on HSI now
 
     dbg_swo_config(BIT(0), 6000000); // Init Debug module // Init SWO channels 0 at 1 MHz
 
@@ -110,7 +103,7 @@ void _exti15_10_isr()
     {
         EXTI->PR = EXTI_PR_PR12;
 
-        
+
     }
 }
 
@@ -125,11 +118,8 @@ void sleep()
 {
     DBGPRINTLN_CTX("Sleeping peripherals...");
 
-//    led_init(0); // Init the LED in IO mode
-//    LED_OFF(); // Set LED off
 
     adc_sleep(); // Sleep the ADCs
-//    adxl345_sleep(); // Sleep the accelerometer
 //    spi_flash_power_down(1); // Power down the flash
 
     DBGPRINTLN_CTX("Sleeping radio...");
@@ -164,7 +154,6 @@ void sleep()
     DBGPRINTLN_CTX("Waking up peripherals...");
 
     adc_wakeup(); // Enable the ADCs
-//    adxl345_wakeup(); // Start the accelerometer
 //    spi_flash_power_down(0); // Wake up the flash
 }
 
@@ -202,13 +191,10 @@ int init()
 
     leds_init();
 
-//    led_init(ubLEDMode); // Init the LED in PWM mode
-
 //    uart1_init(500000);
 
 //    spi1_init(0, SPI_CLOCK_DIV_2, SPI_MSB_FIRST);
 //    i2c2_init(I2C_NORMAL);
-
 
     // set usb interrupts
 //    IRQ_SET_PRIO(USB_LP_CAN1_RX0_IRQn, 0, 0);
