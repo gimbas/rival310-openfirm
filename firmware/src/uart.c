@@ -1,10 +1,10 @@
 #include "uart.h"
 
 // Define the UART console
-void _putchar(char ch)
-{
-    //uart1_write_byte((uint8_t)ch);
-}
+//void _putchar(char ch)
+//{
+//    uart1_write_byte((uint8_t)ch);
+//}
 
 
 static volatile uint8_t *pubUART1DMABuffer = NULL;

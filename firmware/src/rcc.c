@@ -14,26 +14,26 @@ void rcc_init()
 
     while(!(RCC->CR & RCC_CR_HSERDY)); // Wait until HSE is ready
 
-    flash_latency_config(8000000); // Configure flash latency
+    flash_latency_config(72000000); // Configure flash latency
 
     RCC->CFGR |= RCC_CFGR_HPRE_DIV1; // AHB Clock = Sys Clock
     RCC->CFGR |= RCC_CFGR_PPRE2_DIV1; // APB2 Clock = Sys Clock
-    RCC->CFGR |= RCC_CFGR_PPRE1_DIV1; // APB1 Clock = Sys Clock
+    RCC->CFGR |= RCC_CFGR_PPRE1_DIV2; // APB1 Clock = Sys Clock
 
-    //RCC->CFGR &= ~RCC_CFGR_PLLXTPRE;
-    //RCC->CFGR |= RCC_CFGR_PLLSRC_HSE | RCC_CFGR_PLLMULL9; // PLLCLK = HSE(8) * 9 = 72 MHz
+    RCC->CFGR &= ~RCC_CFGR_PLLXTPRE;
+    RCC->CFGR = (RCC->CFGR & ~(RCC_CFGR_PLLSRC | RCC_CFGR_PLLMULL)) | RCC_CFGR_PLLSRC_HSE | RCC_CFGR_PLLMULL9; // PLLCLK = HSE(8) * 9 = 72 MHz
 
-    //RCC->CR |= RCC_CR_PLLON; // Enable PLL
+    RCC->CR |= RCC_CR_PLLON; // Enable PLL
 
-    //while(!(RCC->CR & RCC_CR_PLLRDY)); // Wait until PLL lock
+    while(!(RCC->CR & RCC_CR_PLLRDY)); // Wait until PLL lock
 
-    RCC->CFGR = (RCC->CFGR & ~RCC_CFGR_SW) | RCC_CFGR_SW_HSE; // HSE as Sys Clock
+    RCC->CFGR = (RCC->CFGR & ~RCC_CFGR_SW) | RCC_CFGR_SW_PLL; // PLL as Sys Clock
 
-    while((RCC->CFGR & RCC_CFGR_SWS) != RCC_CFGR_SWS_HSE);
+    while((RCC->CFGR & RCC_CFGR_SWS) != RCC_CFGR_SWS_PLL);
 
     RCC->CR &= ~RCC_CR_HSION; // Disable HSI
 
-    RCC->CFGR |= RCC_CFGR_USBPRE; // USB clock not divided
+    RCC->CFGR &= ~RCC_CFGR_USBPRE; // USB clock divided by 1.5
     RCC->CFGR |= RCC_CFGR_ADCPRE_DIV8; // ADC clock /8 (min clock)
 
     RCC->CSR |= RCC_CSR_LSION; // Enable LSI
@@ -55,7 +55,7 @@ void rcc_update_clocks()
             uint32_t pllmul = ((RCC->CFGR & RCC_CFGR_PLLMULL) >> 18) + 2;
             uint32_t pllsrc = RCC->CFGR & RCC_CFGR_PLLSRC;
 
-            if (pllsrc == RCC_CFGR_PLLSRC) // 1 means PLL INPUT = HSI / 2
+            if (pllsrc == RCC_CFGR_PLLSRC_HSI_Div2) // 1 means PLL INPUT = HSI / 2
             {
                 SYS_CLOCK_FREQ = (HSI_VALUE >> 1) * pllmul;
             }

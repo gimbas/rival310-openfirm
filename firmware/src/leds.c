@@ -13,7 +13,7 @@ void leds_init()
 
     // timer configuration
     TIM1->ARR = (1 << 8) - 1; // 8-bit PWM
-    TIM1->PSC = 1; // frequency = [APB1_TIM_CLOCK_FREQ / TIM1->PSC + 1 / TIM1->ARR] = [8MHz / 2 / 255] =  15.7KHz
+    TIM1->PSC = 6; // frequency = [APB1_TIM_CLOCK_FREQ / TIM1->PSC + 1 / TIM1->ARR] = [36MHz / 7 / 255] =  20.168KHz
     TIM1->EGR |= TIM_EGR_UG; // Update immediatly
 
     // capture compare configuration

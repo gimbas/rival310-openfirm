@@ -47,6 +47,8 @@
 #define SPI_FLASH_SELECT() GPIOA->BSRR = BIT(1) << 16
 #define SPI_FLASH_UNSELECT() GPIOA->BSRR = BIT(1)
 
+#define USB_DISCONNECT_CLEAR() GPIOA->BSRR = BIT(15) << 16
+#define USB_DISCONNECT_SET() GPIOA->BSRR = BIT(15)
 
 void gpio_init();
 

@@ -1,6 +1,7 @@
 #include <stm32f10x.h>
 #include <stdlib.h>
 #include <math.h>
+#include "dbg.h"
 #include "debug_macros.h"
 #include "nvic.h"
 #include "utils.h"
@@ -51,6 +52,9 @@ const uint8_t ubLights[360] = { // sine fade technique to cycle rgb led
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
+// variables usb
+
+
 // ISRs
 void _nmi_isr()
 {
@@ -61,6 +65,8 @@ void _nmi_isr()
     //    DBGPRINTLN_CTX("RFM69 init OK!");
     //else
     //    DBGPRINTLN_CTX("RFM69 init NOK!");cks(); // Update clocks, we should be running on HSI now
+
+    dbg_swo_config(BIT(0), 6000000); // Init Debug module // Init SWO channels 0 at 1 MHz
 
     systick_init();
 
@@ -104,7 +110,7 @@ void _exti15_10_isr()
     {
         EXTI->PR = EXTI_PR_PR12;
 
-//      Call Accelerometer ISR
+        
     }
 }
 
@@ -202,6 +208,17 @@ int init()
 
 //    spi1_init(0, SPI_CLOCK_DIV_2, SPI_MSB_FIRST);
 //    i2c2_init(I2C_NORMAL);
+
+
+    // set usb interrupts
+//    IRQ_SET_PRIO(USB_LP_CAN1_RX0_IRQn, 0, 0);
+//    IRQ_CLEAR(USB_LP_CAN1_RX0_IRQn);
+//    IRQ_ENABLE(USB_LP_CAN1_RX0_IRQn);
+
+//    IRQ_SET_PRIO(USBWakeUp_IRQn, 0, 0);
+//    IRQ_CLEAR(USBWakeUp_IRQn);
+//    IRQ_ENABLE(USBWakeUp_IRQn);
+
 
     DBGPRINTLN_CTX("Rival 310 Open-firm v%lu (%s %s)!", BUILD_VERSION, __DATE__, __TIME__);
     DBGPRINTLN_CTX("Interfaces init OK!");

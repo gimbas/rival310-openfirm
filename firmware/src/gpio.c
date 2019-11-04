@@ -13,11 +13,11 @@ void gpio_init()
     // PA8 - Rival 310 - Logo RGB Green
     // PA9 - Rival 310 - Logo RGB Red
     // PA10 - Rival 310 - Logo RGB Blue
-    // PA11 -
-    // PA12 -
+    // PA11 - Rival 310 - USB DM
+    // PA12 - Rival 310 - USB DP
     // PA13 - AF (SWDIO) Output 50MHz push-pull
     // PA14 - AF (SWCLK) Output 50MHz push-pull
-    // PA15 -
+    // PA15 - USB disconnect
     RCC->APB2RSTR |= RCC_APB2RSTR_IOPARST; // Reset peripheral
     RCC->APB2RSTR &= ~RCC_APB2RSTR_IOPARST;
     RCC->APB2ENR |= RCC_APB2ENR_IOPAEN; // Enable GPIOA peripheral clock
@@ -30,8 +30,11 @@ void gpio_init()
                  IO_MODE_CFG(7, IO_MODE_OUT_10M, IO_CFG_OUT_GP_PP);
     GPIOA->CRH = IO_MODE_CFG(8, IO_MODE_OUT_10M, IO_CFG_OUT_AF_PP) |
                  IO_MODE_CFG(9, IO_MODE_OUT_10M, IO_CFG_OUT_AF_PP) |
-                 IO_MODE_CFG(10, IO_MODE_OUT_10M, IO_CFG_OUT_AF_PP);
-    GPIOA->ODR = BIT(8) | BIT(9) | BIT(10);
+                 IO_MODE_CFG(10, IO_MODE_OUT_10M, IO_CFG_OUT_AF_PP)|
+                 IO_MODE_CFG(11, IO_MODE_IN, IO_CFG_IN_PULL)|
+                 IO_MODE_CFG(12, IO_MODE_IN, IO_CFG_IN_PULL)|
+                 IO_MODE_CFG(15, IO_MODE_OUT_10M, IO_CFG_OUT_GP_PP);
+    GPIOA->ODR = 0;
 
     // PB0 - (RADIO_RST) Output 2MHz push-pull
     // PB1 -
