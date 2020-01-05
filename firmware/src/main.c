@@ -283,7 +283,7 @@ int main()
             
             static uint16_t usLightsIndex = 0;
 
-            leds_logo_set(ubLights[(usLightsIndex+120)%360], ubLights[usLightsIndex], ubLights[(usLightsIndex+240)%360]);
+            leds_scroll_set(ubLights[(usLightsIndex+120)%360], ubLights[usLightsIndex], ubLights[(usLightsIndex+240)%360]);
 
             if(usLightsIndex >= 360)
                 usLightsIndex = 0;

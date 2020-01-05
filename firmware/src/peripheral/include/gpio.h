@@ -52,6 +52,4 @@
 
 void gpio_init();
 
-void play_sound(uint16_t usFrequency, uint32_t ulTime);
-
 #endif
